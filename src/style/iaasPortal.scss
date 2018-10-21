@@ -1,0 +1,13 @@
+.iaasProtal {
+	display: flex;
+	height: 100%;
+	flex: 1;
+	.sider {
+		height: 100%;
+		order: 1;
+	}
+	.mainContent {
+		height: 100%;
+		order: 2;
+	}
+}

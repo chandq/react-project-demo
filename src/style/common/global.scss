@@ -1,0 +1,86 @@
+
+@mixin flexbox($box-pack,$justify-content,$box-align,$align-items) {
+    display: box;
+    display: -moz-box;
+    display: -webkit-box;
+    display: flex;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    box-pack: $box-pack;
+    -ms-box-pack: $box-pack;
+    -moz-box-pack: $box-pack;
+    -webkit-box-pack: $box-pack;
+    justify-content: $justify-content;
+    -ms-justify-content: $justify-content;
+    -moz-justify-content: $justify-content;
+    -webkit-justify-content: $justify-content;
+    -webkit-box-align: $box-align;
+    align-items: $align-items;
+    -moz-align-items: $align-items;
+    -webkit-align-items: $align-items;
+}
+
+@mixin flexbox-vertical-center() {
+    display: box;
+    display: -moz-box;
+    display: -webkit-box;
+    display: flex;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -moz-align-items: center;
+    -webkit-align-items: center;
+}
+
+@mixin flexwrap() {
+    box-lines: multiple;
+    -moz-box-lines: multiple; /*Firefox*/
+    -webkit-box-lines: multiple; /*Safari,Opera,Chrome*/
+    flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+}
+
+$width-small: 1000px;
+$width-medium: 1500px;
+$width-large: 1700px;
+
+@mixin responsive($width) {
+    @if $width == wide-screens {
+        @media only screen and (max-width: $width-large) {
+            @content;
+        }
+    } @else if $width == medium-screens {
+        @media only screen and (max-width: $width-medium) {
+            @content;
+        }
+    } @else if $width == small-screens {
+        @media only screen and (max-width: $width-small) {
+            @content;
+        }
+    }
+}
+
+@mixin no-wrap() {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+};
+
+@mixin roundBorderStyle {    // 圆角边框样式
+    border: solid #4a4a4a 1px;
+    border-radius: 4px;
+}
+
+@mixin autoFlex {
+    display: flex;
+    flex: 1;
+}
+
+
+$fontFamily: 微软雅黑, '苹方', Arial, "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Sans Serif", sans-serif !important;
+$loginBackground: #333;
+$hypervisorHeader: #019bfd;
+
+$header: #191919;

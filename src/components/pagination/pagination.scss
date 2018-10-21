@@ -1,0 +1,56 @@
+// 分页
+:global {
+  .pagination-container{
+    //justify-content: flex-end!important;
+    margin-top: 20px;
+    //display: flex;
+    //justify-content: center;
+    //align-items: center;
+    //color: #191919;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-20%, 0);
+    color: #fff;
+    .ant-pagination-item-link {
+      background-color: transparent;
+      border-radius: 50%;
+    }
+    .ant-pagination-item {
+      background-color: transparent;
+      border-radius: 50%;
+      padding: 0px 5px;
+      //width: 20px;
+       a {
+         margin: 0px;
+         color: #fff;
+       }
+    }
+    .ant-pagination-item-active {
+      background-color: #525252;
+      color: #fff;
+    }
+    .pagination{
+      &>li{
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        min-width: 16px!important;
+        line-height: 16px;
+        margin: 0 2px;
+        a{
+          margin: 0px!important;
+        }
+        &.ant-pagination-item-active{
+          background: #515151 !important;
+        }
+      }
+    }
+    .ant-pagination-next, .ant-pagination-prev{
+      background: none !important;
+      a{
+        color: #fff;
+      }
+    }
+  }
+}

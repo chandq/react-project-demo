@@ -1,0 +1,50 @@
+.esagem-modal-panel {
+  position: fixed;
+  height: 400px;
+  width: 300px;
+  background-color: #ccc;
+  z-index: 1000;
+}
+:global {
+  .esage-modal-panel {
+    .ant-modal {
+      width: 800px !important;
+      //.ant-modal-header {
+      //  border-radius: 0px !important;
+      //  background-color: transparent !important;
+      //}
+
+      .ant-modal-body {
+        padding: 20px 40px 0px 40px!important;
+        margin-bottom: 30px!important;
+        form{
+          .ant-form-item{
+            margin-bottom: 15px;
+          }
+        }
+      }
+      .ant-modal-content {
+        //border-radius: 0px !important;
+        background: linear-gradient(to bottom, #fefefe, #e8e9eb) !important;
+      }
+      //.ant-modal-close-x:before {
+      //  font-size: 18px !important;
+      //  color: rgb(70, 70, 70) !important;
+      //}
+      //.ant-modal-body {
+      //  border-bottom: 1px solid #ccc;
+      //  border-top: 1px solid #ccc;
+      //  .ant-steps {
+      //    margin-bottom: 16px;
+      //    border-bottom: 1px solid #019bfd !important;
+      //  }
+      //}
+      //.ant-modal-title {
+      //  color: #000 !important;
+      //}
+    }
+    .diskProperty{
+      width: 450px !important;
+    }
+    }
+}

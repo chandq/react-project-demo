@@ -1,0 +1,150 @@
+@charset "utf-8";
+@import 'common/global';
+
+.login {
+  width: 100%;
+  height: 100%;
+  @include flexbox(center, center, center, center);
+  background-color: $loginBackground;
+  .content {
+    width: 298px;
+    box-shadow: 0 0 100px rgba(0, 0, 0, .08);
+    button {
+      width: 100%;
+    }
+
+    p {
+      color: rgb(204, 204, 204);
+      text-align: center;
+      margin-top: 16px;
+
+      span {
+        &:first-child {
+          margin-right: 16px;
+        }
+      }
+    }
+    .logo {
+      text-align: center;
+      height: 54px;
+      line-height: 54px;
+      margin-bottom: 30px;
+
+      img {
+        width: 298px;
+        height: 54px;
+      }
+    }
+    .label {
+      &:first-child {
+        margin-bottom: 14px !important;
+      }
+      &:nth-child(2) {
+        margin-bottom: 14px !important;
+      }
+      div {
+        height: 39px;
+        line-height: 39px;
+        &:after {
+          height: 39px;
+          line-height: 39px;
+        }
+        label {
+          font-size: 14px !important;
+          color: #fff !important;
+        }
+        label:before, label:after {
+          display: none !important;
+        }
+      }
+    }
+    .input {
+      height: 35px !important;
+      input {
+        height: 35px;
+        padding-left: 30px;
+        color: #333;
+        font-size: 14px;
+        border-radius: 0;
+      }
+      & + div {
+        position: absolute;
+        right: 0;
+        top: -36px;
+        color: #f9b34f;
+      }
+    }
+    .login-button {
+      background: #257846;
+      width: 298px;
+      height: 35px !important;
+      border: solid 0px #fbffde;
+      line-height: 32px;
+      border-radius: 0;
+      span {
+        font-size: 16px !important;
+      }
+      &:hover {
+        background: #31a860;
+      }
+      &:active {
+        background: #1b5b35;
+      }
+    }
+    .rememberItem {
+      margin-top: 10px;
+    }
+    .checkbox {
+      font-size: 14px;
+      & input{
+        width: 20px;
+        height: 20px;
+        background-color: #fbffde;
+        border: solid 1px #fbffde;
+        &+span {
+          width: 20px;
+          height: 20px;
+          &:after {
+            width: 7px;
+            height: 12px;
+            margin-left: 2px ;
+          }
+        }
+      }
+      & > span:last-child {
+        color: #fff;
+      }
+    }
+    .passwordError {
+      position: absolute;
+      top: -93px;
+      color: #f9b34f;
+      right: 0;
+      font-size: 12px;
+    }
+  }
+}
+
+:global {
+  .loginSelectInput {
+    .ant-select-selection {
+      height: 35px !important;
+      line-height: 35px !important;
+      border-radius: 0;
+    }
+    .ant-select-selection__rendered {
+      height: 35px !important;
+      line-height: 35px !important;
+    }
+    .ant-select-selection-selected-value {
+      height: 35px !important;
+      line-height: 35px !important;
+    }
+  }
+  .rememberItem{
+    .ant-checkbox-checked .ant-checkbox-inner {
+      background-color: #565656 !important;
+      border: 1px solid #565656 !important;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "severity": "severity",
+  "morenzhi": "dddddddddddddddddddddd",
+  "all": "all",
+  "operationLog":"1111111",
+  "operationLogSummary":"22222222222",
+
+  "loginPassword":"loginPassword",
+  "choiceLanguage":"choiceLanguage",
+  "loginLogin":"loginLogin",
+  "rememberPassword":"rememberPassword",
+  "loginUserName":"loginUserName"
+}

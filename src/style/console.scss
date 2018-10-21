@@ -1,0 +1,35 @@
+.console {
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  .console-title {
+    display: flex;
+    height: 30px;
+    background-color: #191919;
+    padding: 0 10px;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    font-weight: bold;
+    .console-button {
+      span {
+        padding: 10px 0px 0px 15px;
+        cursor: pointer;
+      }
+    }
+  }
+  .console-content {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+  }
+}
+:global {
+  .controller {
+    .ant-table-wrapper {
+      height: 100%;
+    }
+  }
+}

@@ -1,0 +1,72 @@
+@charset "utf-8";
+@import 'common/global';
+
+.app {
+    height: 100%;
+}
+
+.home-page {
+    height: 100%;
+    display: flex;
+    .panel {
+        height: 100%;
+    }
+    .sider {
+        width: 225px !important;
+        min-width: 225px !important;
+        max-width: 225px !important;
+    }
+    .main {
+        height: 100%;
+        //overflow: auto;
+        background: #2b292a;
+    }
+    .manage {
+        width: 100%;
+        height: 42px;
+        background: #019bfd;
+        padding-left: 208px;
+        color: #fff;
+        font-size: 15px;
+        line-height: 42px;
+    }
+    .content {
+        height: 940px;
+        width: 1659px;
+    }
+
+}
+
+.header {
+    display: flex;
+    height: 50px !important;
+    line-height: 50px !important;
+    padding: 0 !important;
+    min-height: 40px;
+    background: $hypervisorHeader !important;
+    position: relative;
+    .logoContainer {
+        height: 100%;
+        width: 11.2%;
+        //order: 1;
+        .logo {
+            width: 100%;
+            height: 100%;
+        }
+//
+    }
+    .buttons {
+        position: absolute;
+        right: 20px;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        & a {
+            color: #fff;
+        }
+        .logout {
+            cursor: pointer;
+        }
+    }
+}
+

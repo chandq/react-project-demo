@@ -1,0 +1,125 @@
+@charset "utf-8";
+@import 'global.scss';
+
+:global {
+  body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    //color: #191919;
+  }
+  html {
+    font-family: $fontFamily;
+    font-size: 62.5%; // 10÷16=62.5%
+    overflow: hidden;
+  }
+  body {
+    font-size: 1.4rem;
+    color: #191919 !important;
+    font-family: $fontFamily;
+  }
+  //font
+  .font12 {
+    font-size: 1.4rem;
+    color: #fff;
+  }
+  .font14 {
+    font-size: 1.4rem;
+    color: #fff;
+  }
+  .font14-Active {
+    font-size: 1.4rem;
+    color: #0582d6;
+  }
+  .font15 {
+    font-size: 1.5rem;
+    color: #ffffff;
+  }
+  .font15-Active {
+    font-size: 1.5rem;
+    color: #0582d6;
+  }
+  .font18 {
+    font-size: 1.8rem;
+    color: #ffffff;
+  }
+  .font18-active {
+    font-size: 1.8rem;
+    color: #0582d6;
+  }
+  .font24 {
+    font-size: 2.4rem;
+    color: #ffffff;
+  }
+  .font30 {
+    font-size: 3.0rem;
+    color: #ffffff;
+  }
+  .font30-active {
+    font-size: 3.0rem;
+    color: #0582d6;
+  }
+
+  #root {
+    height: 100%;
+  }
+}
+
+// HexagonalBinning蜂窝图
+:global {
+  .hexagon {
+    stroke: #353535;
+    stroke-width: 3px;
+  }
+  .small-hexagon {
+    stroke: #353535;
+    stroke-width: 1px;
+  }
+  .tooltip {
+    position: absolute;
+    z-index: 1070;
+    display: block;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+    background-color: rgba(50, 50, 50, 0.7);
+    border-radius: 4px;
+    transaction: left 0.4s cubic-bezier(0.23, 1, 0.32, 1), top 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .tooltip-inner {
+    max-width: 250px;
+    padding: 3px 8px;
+    color: #fff;
+    text-decoration: none;
+    /*background-color: #000;*/
+    border-radius: 4px;
+    text-align: left;
+  }
+}
+
+// 全局等待条Pace组件
+:global {
+  .pace-progressbar {
+    display: none;
+    z-index: 99999999;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .1);
+  }
+}
+
+:global {
+  .header-content .ant-menu-item {
+    background-color: $header !important;
+    width: 140px;
+    text-align: center;
+  }
+  .header-content .ant-menu-item-selected > a {
+    color: #019bfd !important;
+  }
+}
