@@ -7,6 +7,7 @@ module.exports = {
 		require.ensure([], (require) => {
 			cb(null, [
 				require('./pages/iaas'),
+				require('./pages/overview'),
 			])
 		})
     },

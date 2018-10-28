@@ -11,7 +11,7 @@ import useBasename from "history/lib/useBasename";
 import moment from "moment";
 require("./style/common/common.scss");
 
-/*window.paceOptions = {
+window.paceOptions = {
 	// document: true,
 	eventLag: true,
 	ajax: {
@@ -20,7 +20,8 @@ require("./style/common/common.scss");
 	target: '#pace-progressbar'
 };
 require('components/pace/pace.js');
-require('style/common/pace.css');*/
+require('style/common/pace.css');
+require('./components/china.js');
 moment.locale(locale);
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);

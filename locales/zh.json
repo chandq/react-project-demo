@@ -9,7 +9,10 @@
   "login":"登录",
   "rememberPassword":"记住密码",
   "homepage":"首页",
-  "component":"组件"
+  "component":"组件",
+  "compute":"计算",
+  "storage":"存储",
+  "network":"存储"
 
 
 }

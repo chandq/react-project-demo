@@ -107,6 +107,12 @@
   },
   "eslintConfig": {
     "extends": "react-app",
+    "env": {
+      "amd": true,
+      "browser": true,
+      "commonjs": true,
+      "node": true
+    },
     "globals": {
       "host": false,
       "api": false,

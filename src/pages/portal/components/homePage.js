@@ -4,6 +4,7 @@ import {browserHistory} from "react-router";
 import {Layout, Breadcrumb, Spin, Icon} from "antd";
 import {decrypter} from "../../../utils/crypto";
 import MyHeader from "./myHeader";
+import Overview from 'pages/overview/components/dataMap';
 import ErrorBoundary from 'components/errorBoundary/ErrorBoundary';
 import Console from './console'
 
@@ -43,7 +44,7 @@ class HomePage extends Component {
 				<Layout className={style.panel}>
 					<Content className={style.main}>
 						<ErrorBoundary>
-							{this.props.children || <div></div>}
+							{this.props.children || <Overview />}
 						</ErrorBoundary>
 					</Content>
 				</Layout>
