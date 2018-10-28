@@ -5,11 +5,12 @@
  */
 import React, {Component} from "react";
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import * as d3 from 'd3';
 import {injectIntl} from 'react-intl';
 import * as d3hexbin from 'd3-hexbin';
 import {mouseEnterEvt, mouseLeaveEvt} from '../../utils/customTitle';
-class HexagonalBinning extends Component {
+class HexagonalChart extends Component {
 
 	constructor(props) {
 		super(props);
@@ -24,12 +25,13 @@ class HexagonalBinning extends Component {
 		// console.info("didMount, svg: ", d3.select(`#${svgid}`));
 		this.resizeHeightWidth();
 		let resize = () => {
-			if ((data.collection && data.collection.length > 0)) {
+			if ((data && data.length > 0)) {
 				d3.select(`#${svgid}`).select('g').remove();
 				this.resizeHeightWidth();
 				this.renderHoneycombDiagram();
 			}
 		};
+		resize();
 		window.onresize = resize;
 	}
 
@@ -65,12 +67,12 @@ class HexagonalBinning extends Component {
 
 		if (document.querySelector(`#${svgid}`)) {
 			d3.select(`#${svgid}`).select('g').remove();
-			if (!(data.collection && data.collection.length > 0)) {
+			if (!(data && data.length > 0)) {
 				return;
 			}
 			// console.info("**********width, height:", getComputedStyle(document.querySelector(`#${svgid}`)).width.split('px')[0], getComputedStyle(document.querySelector(`#${svgid}`)).height.split('px')[0]);
 			// console.info("**********parent width, height:", getComputedStyle(document.querySelector(`#${svgid}`).parentElement).width.split('px')[0], getComputedStyle(document.querySelector(`#${svgid}`).parentElement).height.split('px')[0]);
-			let len = data.collection.length,
+			let len = data.length,
 				r = 0,
 				marginTop = 50,
 				rowCount = 1,    // 每行放置多少个
@@ -155,7 +157,7 @@ class HexagonalBinning extends Component {
 			 * 偶数行增加规律：x += √3*r*(0.5+自然数)
 			 *               y +=1.5*r*自然数
 			 * */
-			let points = data.collection.map((value, index) => {
+			let points = data.map((value, index) => {
 				let isOddRow = parseInt(parseInt((index) / rowCount) % 2);
 				if (index !== 0 && isOddRow != parseInt(parseInt((index - 1) / rowCount) % 2)) {
 					oddNumber = 0;
@@ -296,10 +298,10 @@ class HexagonalBinning extends Component {
 				})
 				.on("mouseover", (d, i) => {
 					let str = this.getfloatText(d);
-					mouseEnterEvt(str.toString(), event);
+					mouseEnterEvt(str.toString(), d3.event);
 				}).on("mousemove", (d, i) => {
 					let str = this.getfloatText(d);
-					mouseEnterEvt(str.toString(), event);
+					mouseEnterEvt(str.toString(), d3.event);
 				})
 				.on("mouseout", (d, i) => {
 					mouseLeaveEvt();
@@ -363,17 +365,16 @@ class HexagonalBinning extends Component {
 
 	}
 }
-HexagonalBinning.defaultProps = {
-	data: {},
+HexagonalChart.defaultProps = {
+	data: [],
 	svgid: ''   // 容器id
+};
+HexagonalChart.propTypes = {
+	data: PropTypes.array,
+	svgid: PropTypes.string
 }
 function mapStateToProps(state) {
-	// const { fetchHome, selectDataCenters } = state
-	// return {
-	// 	fetchHomeData: fetchHome.fetchHomeData,
-	// 	servers: fetchHome.servers,
-	// }
 	return {}
 }
 
-export default connect(mapStateToProps)(injectIntl(HexagonalBinning));
+export default connect(mapStateToProps)(injectIntl(HexagonalChart));

@@ -22,7 +22,7 @@ class Login extends Component {
 			loading: false,
 			visible: false,
 			modalKey: Math.random(),
-            loginLogoSrc:'images/esage_denglulogo.svg'
+            loginLogoSrc:'images/github.png'
 		}
 	}
 
