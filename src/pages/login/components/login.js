@@ -8,9 +8,10 @@ import user from "../../../style/img/yonghu.png";
 import password from "../../../style/img/mima.png";
 import {encrypter, decrypter} from "src/utils/crypto";
 import {login, resetPwdValid, language, modify} from "../actions/index";
-import {injectIntl, FormattedMessage, defineMessages} from 'react-intl';
+import {injectIntl, formatMessage, defineMessages} from 'react-intl';
 
 const FormItem = Form.Item;
+const style = require('../../../style/login.scss');
 
 class Login extends Component {
 	constructor(props, context) {
@@ -27,7 +28,7 @@ class Login extends Component {
 	}
 
 	componentWillMount() {
-		this.props.dispatch(language('CN'));
+		// this.props.dispatch(language('CN'));
 	}
 
 	componentDidMount() {
@@ -96,12 +97,9 @@ class Login extends Component {
         }
     };
 	render() {
-		const style = require('../../../style/login.scss');
-		const loading = this.props.loading
-		const {visible, confirmLoading, modalKey} = this.state;
 		const {getFieldDecorator, getFieldsError} = this.props.form;
 		const {formatMessage} = this.props.intl;
-		const {loginUserName, loginPassword, choiceLanguage, loginLogin, rememberPassword} = messages;
+		const {loginUserName, loginPassword, choiceLanguage, login, rememberPassword, chineseOption, englishOption} = messages;
 		return (
 			<div className={style.login}>
 				<div className={style.content}>
@@ -137,15 +135,15 @@ class Login extends Component {
 								optionFilterProp="children"
 								onChange={this.handleChange}
 							>
-								<Select.Option value="CN">中文</Select.Option>
-								<Select.Option value="EN">英文</Select.Option>
+								<Select.Option value="CN">{formatMessage(chineseOption)}</Select.Option>
+								<Select.Option value="EN">{formatMessage(englishOption)}</Select.Option>
 							</Select>
 						</FormItem>
 						<Row>
 							<Button id="sumbitBtn" type="primary" className={`login-button ${style.loginButton}`}
 									onClick={this.loginPost} size="large"
 									loading={this.state.loading}>
-								{formatMessage(loginLogin)}
+								{formatMessage(login)}
 							</Button>
 							<div style={{display: this.props.pwdValid ? "none" : "block"}}
 								 className={style.passwordError}>用户名或密码无效，请重新输入

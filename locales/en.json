@@ -1,13 +1,14 @@
 {
-  "severity": "severity",
-  "morenzhi": "dddddddddddddddddddddd",
-  "all": "all",
-  "operationLog":"1111111",
-  "operationLogSummary":"22222222222",
-
   "loginPassword":"loginPassword",
   "choiceLanguage":"choiceLanguage",
-  "loginLogin":"loginLogin",
+  "login":"login",
   "rememberPassword":"rememberPassword",
-  "loginUserName":"loginUserName"
+  "loginUserName":"loginUserName",
+  "chineseOption":"chinese",
+  "englishOption":"english",
+  "homepage":"homepage",
+  "component":"component",
+  "compute":"compute",
+  "storage":"storage",
+  "network":"network"
 }

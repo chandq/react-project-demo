@@ -2122,8 +2122,8 @@ const messages = defineMessages({
     id: "auth.type.usb",
     defaultMessage: "USB 密钥"
   },
-  loginLogin: {
-    id: "loginLogin",
+  login: {
+    id: "login",
     defaultMessage: "登录"
   },
   connectUSBKey:{

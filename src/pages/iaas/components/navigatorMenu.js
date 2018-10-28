@@ -7,8 +7,9 @@ import React, {Component} from 'react';
 import {Menu, Icon} from 'antd';
 import {connect} from 'react-redux';
 import {browserHistory, Link} from "react-router";
+import messages from "src/entry/messages";
+import {injectIntl} from 'react-intl';
 const style = require('../../../style/app.scss');
-let selectMenuKey = '';
 const SubMenu = Menu.SubMenu;
 class NavigatorMenu extends Component {
 	constructor(props) {
@@ -33,6 +34,8 @@ class NavigatorMenu extends Component {
 	};
 
 	render() {
+		const {formatMessage} = this.props.intl;
+		const {compute, storage, network} = messages;
 		return <Menu
 			className="esage-left-menu"
 			mode="inline"
@@ -43,15 +46,15 @@ class NavigatorMenu extends Component {
 		>
 			<Menu.Item key="computer">
 				<span className="icon-node"></span>
-				<Link to="/navroute/iaas/computer">计算</Link>
+				<Link to="/navroute/iaas/computer">{formatMessage(compute)}</Link>
 			</Menu.Item>
 			<Menu.Item key="storage">
 				<span className="icon-layer"></span>
-				<Link to="/navroute/iaas/storage">存储</Link>
+				<Link to="/navroute/iaas/storage">{formatMessage(storage)}</Link>
 			</Menu.Item>
 			<Menu.Item key="network">
 				<span className="icon-service"></span>
-				<Link to="/navroute/network">网络</Link>
+				<Link to="/navroute/network">{formatMessage(network)}</Link>
 			</Menu.Item>
 
 		</Menu>
@@ -65,5 +68,5 @@ function mapStateToProps(state) {
 		login
 	}
 }
-module.exports = connect(mapStateToProps)(NavigatorMenu);
+module.exports = connect(mapStateToProps)(injectIntl(NavigatorMenu));
 export default NavigatorMenu;

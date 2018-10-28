@@ -10,7 +10,10 @@ import {Link, browserHistory} from "react-router";
 import {decrypter} from "../../../utils/crypto";
 import {unLogin, login} from "../../login/actions/index";
 import {visitConsole} from "../actions/index";
+import messages from "src/entry/messages";
+import {injectIntl} from 'react-intl';
 // import Button from 'components/button/button';
+
 const style = require('../../../style/app.scss');
 
 const Option = Select.Option;
@@ -81,8 +84,8 @@ class MyHeader extends Component {
 	};
 
 	render() {
-		const {menuText} =this.state;
-		const {tabKey} =this.props;
+		const {formatMessage} = this.props.intl;
+		const {homepage, component} = messages;
 		return <Header id="header" className={style.header}>
 			<div className={style.logoContainer}>
 				{/*<img src={logo} className={style.logo}/>*/}
@@ -107,10 +110,10 @@ class MyHeader extends Component {
 					selectedKeys={[this.state.selectMenuKey]}
 				>
 					<Menu.Item key="overview">
-						<Link to="/navroute/overview">首页</Link>
+						<Link to="/navroute/overview">{formatMessage(homepage)}</Link>
 					</Menu.Item>
 					<Menu.Item key="computer">
-						<Link to="/navroute/iaas">组件</Link>
+						<Link to="/navroute/iaas">{formatMessage(component)}</Link>
 					</Menu.Item>
 				</Menu>
 			</div>
@@ -124,4 +127,4 @@ function mapStateToProps(state, ownProps) {
 		consoleIsShow: showConsole.consoleIsShow,
 	}
 }
-module.exports = connect(mapStateToProps)(MyHeader);
+module.exports = connect(mapStateToProps)(injectIntl(MyHeader));
