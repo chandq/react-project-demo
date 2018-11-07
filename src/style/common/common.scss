@@ -113,6 +113,7 @@
   }
 }
 
+
 :global {
   .header-content .ant-menu-item {
     background-color: $header !important;
@@ -125,5 +126,10 @@
   // 首页地图北京
   .dataMap {
     background: url("../../style/img/background.png") no-repeat;
+  }
+  // 登录按钮样式覆盖
+  .login-button {
+    background-color: #257846 !important;
+    border-color: #257846 !important;
   }
 }

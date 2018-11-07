@@ -5,6 +5,7 @@ export const LOGIN = 'LOGIN'
 export const UN_LOGIN = 'UN_LOGIN'
 export const CHECK_PASSWORD = 'CHECK_PASSWORD';
 export const FETCH_LANGUAGE = 'FETCH_LANGUAGE';
+export const START_OR_END_PENDING = 'START_OR_END_PENDING';
 
 export function loginPost(json) {
 	return {
@@ -19,11 +20,20 @@ function unLoginPost() {
 	}
 }
 
-function pwdError(flag) {
+function passwordValid({pwdValid, loading=false, overdue='', errorMessage=''}) {
 	return {
 		type: CHECK_PASSWORD,
-		pwdValid: flag,
-		loading: false,
+		pwdValid,
+		loading,
+		overdue,
+		errorMessage
+	}
+}
+
+function pending({loading}) {
+	return {
+		type: START_OR_END_PENDING,
+		loading,
 	}
 }
 
@@ -36,12 +46,15 @@ export function language(value) {
 
 export function login({username, password, remember}) {
 	return dispatch => {
-		if (username=='admin' && password == 'admin') {
-			dispatch(pwdError(true));
-			dispatch(loginPost({id: 1}));
-		} else {
-			dispatch(pwdError(false));
-		}
+		dispatch(pending({loading: true}));
+		setTimeout(() => {
+			if (username=='admin' && password == 'admin') {
+				dispatch(passwordValid({pwdValid: true, loading: false}));
+				dispatch(loginPost({id: 1}));
+			} else {
+				dispatch(passwordValid({pwdValid: false, loading: false}));
+			}
+		}, 1000);
 		// const queryStr = `grant_type=password&username=${username}&password=${password}`;
 		// return fetch(`${api}/oauth2/token/`, {
 		// 	method: 'POST',
@@ -63,8 +76,8 @@ export function login({username, password, remember}) {
 		// 	}
 		//
 		// }).catch((err, response) => {
-		// 	dispatch(pwdError(false));
-		// 	// message.error(err.message)
+		//
+		//  dispatch(passwordValid({pwdValid: false, loading: false}));
 		// })
 	}
 }
@@ -105,7 +118,7 @@ export function modify({value}) {
 
 export function resetPwdValid() {
 	return dispatch => {
-		dispatch(pwdError(true));
+		dispatch(passwordValid({pwdValid: true}));
 	}
 }
 

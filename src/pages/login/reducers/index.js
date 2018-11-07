@@ -4,13 +4,14 @@ export function login(state = {
 		id: 0
 	},
 	pwdValid: true,
-	loading: true,
+	loading: false,
 }, action) {
 	switch (action.type) {
 		case types.LOGIN:
 			return Object.assign({}, state, {
 				//login:action.login
-				data: action.data
+				data: action.data,
+				loading: false
 			});
 		case types.UN_LOGIN:
 			return Object.assign({}, state, {
@@ -19,6 +20,10 @@ export function login(state = {
 		case types.CHECK_PASSWORD:
 			return Object.assign({}, state, {
 				pwdValid: action.pwdValid,
+				loading: action.loading,
+			});
+		case types.START_OR_END_PENDING:
+			return Object.assign({}, state, {
 				loading: action.loading,
 			});
         case types.FETCH_LANGUAGE:

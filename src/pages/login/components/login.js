@@ -20,7 +20,6 @@ class Login extends Component {
 			username: '',
 			password: '',
 			remember: false,
-			loading: false,
 			visible: false,
 			modalKey: Math.random(),
             loginLogoSrc:'images/github.png'
@@ -47,17 +46,11 @@ class Login extends Component {
 
 	componentWillReceiveProps(nextProps) {
 
-		const {loginData, token, loading, overdue} = nextProps
-		const {getFieldValue} = this.props.form;
+		const {loginData, token, overdue} = nextProps
 		const {remember} = this.state;
 		if (loginData.id) {//登陆成功
 			browserHistory.push(`${basename}`);
 		} else {
-			if (!loading) {
-				this.setState({
-					loading: false,
-				});
-			}
 		}
 	}
 
@@ -67,11 +60,7 @@ class Login extends Component {
 			if (errors) {
 				return
 			}
-			this.setState({loading: true}, () => {
-				// delete values.remember
-				this.props.dispatch(login(values));
-
-			})
+			this.props.dispatch(login(values));
 		})
 	}
 
@@ -142,7 +131,7 @@ class Login extends Component {
 						<Row>
 							<Button id="sumbitBtn" type="primary" className={`login-button ${style.loginButton}`}
 									onClick={this.loginPost} size="large"
-									loading={this.state.loading}>
+									loading={this.props.loading}>
 								{formatMessage(login)}
 							</Button>
 							<div style={{display: this.props.pwdValid ? "none" : "block"}}
@@ -165,8 +154,10 @@ class Login extends Component {
 
 Login.defaultProps = {
 	pwdValid: true,
-	loading: true,
 };
+Login.propTypes = {
+	pwdValid: PropTypes.bool
+}
 
 Login = Form.create()(Login);
 
