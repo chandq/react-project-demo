@@ -1,5 +1,5 @@
 /**
- * author: yangke
+ * author: chendq
  * Date: 2017/11/22
  * Features: 首页资源占用的进度条组件
  */

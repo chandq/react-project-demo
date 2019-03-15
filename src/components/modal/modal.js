@@ -1,5 +1,5 @@
 /**
- * author: yangke
+ * author: chendq
  * Date: 2017/11/28
  * Features: 弹框组件
  */
