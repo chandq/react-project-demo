@@ -1,7 +1,7 @@
 /**
  * author: chendq
  * Date: 2019/3/15
- * Features: 通用类型方法
+ * Features: 通用的方法
  */
 
 // 封装可以取消异步请求callback的公共方法
