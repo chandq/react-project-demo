@@ -1,7 +1,6 @@
 /**
- * @Desc: 公共方法
+ * @Desc: 自定义鼠标的悬浮事件（title）, ECMAScript 5实现
  * Created by chendeqiao on 2017/5/8.
- * @Desc: 自定义鼠标的悬浮事件（title）
  */
 
 // 获取字符串的像素宽度
@@ -31,8 +30,9 @@ export function mouseEnterEvt(title, e) {
 
 	try {
 		var $reactEle = document.querySelector("#root");
+		var $customTitle = null;
 	  if (document.querySelector("#customTitle1494304949567")) {
-		  var $customTitle = document.querySelector("#customTitle1494304949567");
+		  $customTitle = document.querySelector("#customTitle1494304949567");
 		  mouseenter($customTitle, title, e);
 	  } else {
 		  var $contentContainer = document.createElement('div');
@@ -42,7 +42,7 @@ export function mouseEnterEvt(title, e) {
 		  $contentContainer.style.cssText = 'z-index: 999999; visibility: hidden;';
 		  $contentContainer.innerHTML = '<div class="tooltip-inner" style="word-wrap: break-word; max-width: 44px;">皮肤</div>';
 		  $reactEle.appendChild($contentContainer);
-		  var $customTitle = document.querySelector("#customTitle1494304949567");
+		  $customTitle = document.querySelector("#customTitle1494304949567");
 		  if (title) { //判断div显示的内容是否为空
 			  mouseenter($customTitle, title, e);
 			  $customTitle.style.visibility = "visible";
@@ -52,7 +52,7 @@ export function mouseEnterEvt(title, e) {
   } catch (e) {
 	  console.error(e.message);
   }
-};
+}
 function mouseenter($customTitle, title, e) {
 	var diffValueX = 200 + 50, diffValueY; //默认设置弹出div的宽度为250px
 	var x = 13, y = 23;
@@ -81,4 +81,4 @@ export function mouseLeaveEvt() {
   if (document.querySelector("#customTitle1494304949567")) {
     document.querySelector("#root").removeChild(document.querySelector("#customTitle1494304949567"));
   }
-};
+}
