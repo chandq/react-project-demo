@@ -12,7 +12,8 @@ import {unLogin, login} from "../../login/actions/index";
 import {visitConsole} from "../actions/index";
 import messages from "src/entry/messages";
 import {injectIntl} from 'react-intl';
-// import Button from 'components/button/button';
+import Modal from 'components/modal/modal';
+const confirm = Modal.confirm;
 
 const style = require('../../../style/app.scss');
 
@@ -25,7 +26,7 @@ class MyHeader extends Component {
 		super();
 		this.state={
 			selectMenuKey:'overview',
-			loginLogoSrc:'../images/esage_logo.svg'
+			loginLogoSrc:'../images/logo.svg'
 		}
 	}
 	componentWillMount(){
@@ -37,7 +38,15 @@ class MyHeader extends Component {
 	}
 
 	logout = () => {
-		this.props.dispatch(unLogin())
+		confirm({
+			title: '注销操作',
+			content: '确定要注销么？',
+			onCancel: () => {
+			},
+			onOk: () => {
+				this.props.dispatch(unLogin())
+			}
+		})
 	}
 
 	setSelectedMenuKey(){
@@ -66,13 +75,6 @@ class MyHeader extends Component {
 	}
 
 	showConsole =()=> this.props.dispatch(visitConsole(!this.props.consoleIsShow));
-	onImageError=()=>{
-		if(this.state.loginLogoSrc.includes('.svg')){
-			this.setState({
-                loginLogoSrc:"../images/logo.png"
-			})
-		}
-	};
 
 	menuClick=(item)=>{
 		if (this.state.selectMenuKey !=item.key) {

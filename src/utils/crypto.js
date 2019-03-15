@@ -1,5 +1,5 @@
 var CryptoJS = require("crypto-js");
-var key = 'esage'
+var key = 'openSource'
 // Encrypt
 export function encrypter(str = '', secret = key) {
   return CryptoJS.AES.encrypt(str.toString(), secret)

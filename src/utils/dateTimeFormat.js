@@ -16,6 +16,12 @@ let time = {
 	},
 	parseTime: function (dateTime) {
 		return moment(dateTime).format('HH:mm:ss');
+	},
+	getCustomTime: function (formatStr, dateTime) {
+		return moment(dateTime, formatStr);
+	},
+	parseCustomTime: function (formatStr, dateTime) {
+		return moment(dateTime).format(formatStr);
 	}
 }
 export default time;
@@ -23,3 +29,5 @@ export const getDateTime = time.getDateTime;
 export const getTime = time.getTime;
 export const parseDateTime = time.parseDateTime;
 export const parseTime = time.parseTime;
+export const parseCustomTime = time.parseCustomTime;
+export const getCustomTime = time.getCustomTime;

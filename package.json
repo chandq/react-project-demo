@@ -1,6 +1,6 @@
 {
   "name": "react-project-demo",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "autoprefixer": "9.3.1",
@@ -118,11 +118,8 @@
       "api": false,
       "locale": false,
       "basename": false,
-      "throwFetchedError": false,
-      "makeCancelable": false,
-      "clientWidth": false,
-      "clientHeight": false,
-      "isEmptyObject": false
+      "isEmptyObject": false,
+      "isKeyExists": false
     }
   },
   "devDependencies": {

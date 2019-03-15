@@ -78,13 +78,6 @@ class Login extends Component {
 	};
 	/**选择语言结束**/
 
-    onImageError=()=>{
-        if(this.state.loginLogoSrc.includes('.svg')){
-            this.setState({
-                loginLogoSrc:"images/denglulogo.png"
-            })
-        }
-    };
 	render() {
 		const {getFieldDecorator, getFieldsError} = this.props.form;
 		const {formatMessage} = this.props.intl;
@@ -93,7 +86,7 @@ class Login extends Component {
 			<div className={style.login}>
 				<div className={style.content}>
 					<div className={style.logo}>
-						<img alt='logo' src={this.state.loginLogoSrc} onError={this.onImageError}/>
+						<img alt='logo' src={this.state.loginLogoSrc}/>
 					</div>
 					<form>
 						<FormItem className={style.label} label={formatMessage(loginUserName)} hasFeedback>

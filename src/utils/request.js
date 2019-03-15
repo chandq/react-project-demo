@@ -1,44 +1,108 @@
 const oldFetchfn = require('isomorphic-fetch');
-// const showLoading = require('components/portal/actions').showLoading
 const Modal = require('antd/lib/modal');
-const info = Modal.info
-export const fetch = (options, dispatch) => {
-	// if(typeof dispatch === 'function'){
-	//     dispatch(showLoading(true))
-	// }
-	let {
-		method = 'get',
-		data,
-		url,
-		responseType = 'json'
-	} = options;
-	Object.assign(options, {
-		// credentials: 'include',
-		timeout: '30000',
+const info = Modal.info;
+
+const throwFetchedError = (error, response) => {
+	if (Object.prototype.toString.call(response) === '[object Object]') {
+		error.message = response
+	}
+	throw error
+}
+
+const parseHTMLErrMessage = function (response) {
+// 对后台返回HTML数据格式的错误信息进行解析，并返回
+	return response.text().then((responseHtml) => {
+		// responseHtml = response.text();
+		return new Promise((resolve, reject) => {
+			let errorMessageDiv = document.getElementById('errorMessageDiv');
+			if (!errorMessageDiv) {
+				errorMessageDiv = document.createElement('div');
+				errorMessageDiv.id = 'errorMessageDiv';
+				errorMessageDiv.style.display = 'none';
+				errorMessageDiv.innerHTML = responseHtml;
+				Array.from(errorMessageDiv.querySelectorAll('style')).forEach(ele => {
+					ele.parentNode.removeChild(ele);
+				});
+				document.body.appendChild(errorMessageDiv);
+			} else {
+				errorMessageDiv.innerHTML = responseHtml;
+				Array.from(errorMessageDiv.querySelectorAll('style')).forEach(ele => {
+					ele.parentNode.removeChild(ele);
+				});
+			}
+			let message = Array.from(errorMessageDiv.querySelectorAll('p'))[1].querySelector('u').textContent;
+			reject(new Error(message));
+		})
 	});
-	!!sessionStorage.authorization && (options.headers.Authorization = sessionStorage.authorization);
-	if (data !== undefined && typeof data === 'object') {
-		url = appendArguments(url, data)
+};
+const checkStatus = function (response, dispatch) {
+	console.debug('config.js checkStatus -> origin response: ', response);
+	const headers = response.headers;
+	let error;
+	const authenticate = headers.get('www-authenticate')
+	if (authenticate && (authenticate === 'Authentication Invalid' || authenticate === 'Basic realm="Esage Api"') && window.location.href.indexOf('/login') === -1 && global.sessionExpired) {
+		global.sessionExpired = false;
+		sessionStorage.clear();
+		parseHTMLErrMessage(response).then().catch(err => {
+			info({
+				title: err.message !== 'Full authentication is required to access this resource' ? err.message : '会话超时，请重新登录',
+				onOk() {
+					global.sessionExpired = true;
+					window.location.href = window.location.protocol + '//' + window.location.host + `${basename}/login`
+				},
+			});
+		});
+	} else if (response.status >= 200 && response.status < 300) {
+		return response
+	} else if (response.status === 403 || response.status === 401) {
+		try {
+			return parseHTMLErrMessage(response);
+		} catch (e) {
+			error = new Error('禁止访问');
+			throwFetchedError(error, response);
+		}
+	} else if (response.status >= 500) {
+		error = new Error(response.status);
+		throwFetchedError(error, response)
+	} else {
+		let decoder = new TextDecoder();
+		let reader = response.body.getReader();
+		return reader.read().then(function processResult(result) {
+			if (result.done) return
+			let responseText = decoder.decode(result.value, {stream: true});
+			let responseObj = JSON.parse(responseText);
+			error = new Error(responseObj.collection[0].message);
+			throwFetchedError(error, response)
+		})
 	}
-	delete options.data;
-	delete options.url;
-	delete options.responseType;
-	let fetchPromise = null;
-	if (responseType === 'json') {
-		fetchPromise = oldFetchfn(url, options).then(response => {
-			return checkStatus(response, dispatch)
-		}, response => checkNetwork(response, dispatch)).then(parseJSON);
-	} else if (responseType == 'text') {
-		fetchPromise = oldFetchfn(url, options).then(response => {
-			// console.log("fetch-->", response)
-			return checkStatus(response, dispatch)
-		}, response => checkNetwork(response, dispatch)).then(parseText);
+}
+const checkNetwork = function () {
+	throw new Error('请检查网络');
+}
+const parseJSON = function (response) {
+	try {
+		if (response.status === 204) {
+			return response
+		} else {
+			return response.json()
+		}
+	} catch (e) {
+		return response
 	}
+}
+
+global.fetch = function (input, opts, dispatch) {
+	// if(typeof dispatch === 'function'){
+	//   dispatch(showLoading(true))
+	// }
+	opts.credentials = 'include';
+	opts.timeout = '30000';
+	let fetchPromise = oldFetchfn(input, opts).then(response => checkStatus(response, dispatch), response => checkNetwork(response, dispatch)).then(parseJSON)
 	// timoout 处理
 	let timeoutPromise = new Promise(function (resolve, reject) {
 		setTimeout(() => {
 			reject(new Error("网络请求超时"))
-		}, options.timeout)
+		}, opts.timeout)
 	});
 	return Promise.race([fetchPromise, timeoutPromise])
 }
@@ -62,8 +126,8 @@ const download = (options) => {
 	delete options.url;
 	delete options.responseType;
 	return oldFetchfn(url, options).then(res => res.blob().then(blob => {
-		var a = document.createElement('a');
-		var url = window.URL.createObjectURL(blob);   // 获取 blob 本地文件连接 (blob 为纯二进制对象，不能够直接保存到磁盘上)
+		let a = document.createElement('a');
+		let url = window.URL.createObjectURL(blob);   // 获取 blob 本地文件连接 (blob 为纯二进制对象，不能够直接保存到磁盘上)
 		// var filename = fileName;
 		a.href = url;
 		a.download = fileName;
@@ -97,97 +161,12 @@ export function appendArguments(url, payload = {}) {
 		url = url + '?'
 	}
 	args.forEach(item => {
-		let value = payload[item]
+		let value = payload[item];
 		if (value !== undefined) {
 			url += `${item}=${payload[item]}&`
 		}
-	})
+	});
 	return url.substr(0, url.length - 1)
 }
 
-function checkStatus(response, dispatch) {
-	const headers = response.headers
-	const authenticate = headers.get('www-authenticate');
-	if (response.status >= 200 && response.status < 300) {
-		return response
-	}
-	let error;
-	const {host, basename, throwFetchedError} = global;
-	if (response.status === 401) {
-		let decoder = new TextDecoder();
-		let reader = response.body.getReader()
-		reader.read().then(function processResult(result) {
-			if (result.done) return;
-			let responseText = decoder.decode(result.value, {stream: true});
-			let responseObj = '';
-			try {
-				responseObj = JSON.parse(responseText);
-			} catch (err) {
-				throwFetchedError(err, responseText);
-				console.error("checkStatus：", responseText);
-			}
-			if ('invalid_token' == responseObj.error && 'Invalid token passed' == responseObj.error_description) {
-				window.location.href = host + `${basename}/login`;
-			}
-			if (responseObj.detail) {	// 未提供token
-				error = new Error(responseObj.detail);
-			} else {
-				error = new Error(responseObj.error + ':  ' + responseObj.error_description);
-			}
-			throwFetchedError(error, response);
-		});
-		error = new Error('禁止访问');
-		throwFetchedError(error, response)
-	} else {
-		let decoder = new TextDecoder();
-		let reader = response.body.getReader()
-		return reader.read().then(function processResult(result) {
-			if (result.done) return;
-			let responseText = decoder.decode(result.value, {stream: true});
-			let responseObj = '';
-			try {
-				responseObj = JSON.parse(responseText);
-			} catch (err) {
-				throwFetchedError(err, responseText);
-				console.error("checkStatus：", responseText);
-			}
-			error = new Error(responseObj.error + ':  ' + responseObj.error_description);
-			throwFetchedError(error, response);
-		});
-	}
-}
-
-function checkNetwork(response, dispatch) {
-	console.error("checkNetwork: ", response)
-	const error = new Error('请检查网络')
-	throw error
-}
-
-// 解析后台返回JSON格式的数据
-function parseJSON(response) {
-	try {
-		if (response.status == 204) {
-			return response
-		} else {
-			return response.json();
-		}
-	} catch (e) {
-		return response
-	}
-}
-
-// 解析后台返回普通字符串的数据
-function parseText(response) {
-	try {
-		if (response.status == 204) {
-			return response
-		} else {
-			return response.text();
-		}
-	} catch (e) {
-		return response
-	}
-}
-
-export default fetch;
 export const downloadFile = download;
