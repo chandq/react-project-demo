@@ -1,7 +1,9 @@
 /**
  * Created by gtkrab on 1/26/16.
+ * @desc: 数字、单位的转换处理
  */
 let Unit = {
+	// convert(1024, unit.MB, 0) => 1 GB
 	convert: function (data, index, fixedSize) {
 		if (Number.isNaN(fixedSize) || !Number.isSafeInteger(fixedSize)) {
 			fixedSize = 2;
@@ -27,18 +29,9 @@ let Unit = {
 			return size;
 		}
 	},
-	convertUnit: function (data, previousUnit, unit, fixedSize) {
-		if (Number.isNaN(fixedSize) || !Number.isSafeInteger(fixedSize)) {
-			fixedSize = 2;
-		}
-		let units = [' Bytes', ' KB', ' MB', ' GB', ' TB', ' PB', ' PB', ' PB'];
-		let size = '';
-		let preIndex = unit.indexOf(previousUnit), index = unit.indexOf(unit)
-
-
-	},
+	// convertIO(1024, unit.MB) => {size: 1, unit: 'GB'}
 	convertIO: function (data, index) {
-		let units = [' Bytes', ' KB', ' MB', ' GB', ' TB', ' PB', ' PB', ' PB'];
+		let units = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'PB', 'PB'];
 		let size = 0;
 		let retUnit = '';
 		if (Number.isNaN(data) || !Number.isFinite(data)) {
@@ -63,7 +56,7 @@ let Unit = {
 				size = (data / (1024 * 1024 * 1024 * 1024 * 1024));
 				retUnit = units[index + 5];
 			}
-			return {size: size, unit: retUnit};
+			return {size: Number(size), unit: retUnit};
 		}
 	},
 	convertSpeed: function (data, index) {
@@ -118,6 +111,7 @@ let Unit = {
 			return {size: size, unit: retUnit};
 		}
 	},
+	// convertToSpecifiedUnit(1024, unit.MB, unit.GB, 0) => 1
 	convertToSpecifiedUnit: function (data, sourceUnitIndex, targetUnitIndex, fixedSize) {
 		if (Number.isNaN(fixedSize) || !Number.isSafeInteger(fixedSize)) {
 			fixedSize = 2;
