@@ -16,6 +16,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const uiVersion = JSON.stringify(require(paths.appPackageJson).version);
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -30,7 +31,9 @@ const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
 const publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
-const env = getClientEnvironment(publicUrl);
+process.env.uiVersion = require(paths.appPackageJson).version;
+let env = getClientEnvironment(publicUrl);
+env.stringified = Object.assign({'uiVersion': uiVersion, 'process.env': {'uiVersion': uiVersion}}, env.stringified);
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.

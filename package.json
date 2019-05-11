@@ -119,7 +119,8 @@
       "locale": false,
       "basename": false,
       "isEmptyObject": false,
-      "isKeyExists": false
+      "isKeyExists": false,
+      "uiVersion": true
     }
   },
   "devDependencies": {

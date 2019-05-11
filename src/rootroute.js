@@ -4,6 +4,7 @@ const rootRoute = [{
 		component: require('./pages/portal/components/appPortal').default,
 		childRoutes: [
 			require('./pages/login'),
+			require('./pages/version'),
 			require('./routes'),
 			{
 				path: 'error', // 没有权限时重定向到404

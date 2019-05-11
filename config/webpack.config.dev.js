@@ -11,6 +11,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
+const uiVersion = JSON.stringify(require(paths.appPackageJson).version);
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -20,7 +21,9 @@ const publicPath = '/';
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
 const publicUrl = '';
 // Get environment variables to inject into our app.
-const env = getClientEnvironment(publicUrl);
+process.env.uiVersion = require(paths.appPackageJson).version;
+let env = getClientEnvironment(publicUrl);
+env.stringified = Object.assign({'uiVersion': uiVersion, 'process.env': {'uiVersion': uiVersion}}, env.stringified);
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
